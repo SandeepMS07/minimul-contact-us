@@ -1,50 +1,87 @@
-.main-form
-{
-    /* background-color: white;
-    margin: 50px;
-    padding: 70px; */
-    background-color: white;
-    /* margin-left: 60px; */
-    margin-top: 47px;
-    /* margin-right: 500px; */
-    width: 400px;
-    height: 578px;
-    text-align: left;
-    padding: 39px;
-    /* border-radius: 10px; */
-    color: rgba(0, 0, 0, 0.795);
-    font-family: Arial, Helvetica, sans-serif;
+.main-form {
+  color: rgba(0, 0, 0, 0.795);
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 10px;
+  justify-content: center;
 }
-.main-form h1
-{ 
-    font-size: 30px;
-    margin-bottom: 20px;
+.main-form h1 {
+  font-size: 30px;
 }
-.main-form h4{
-    opacity: 0.8;
-    margin-bottom: 35px;
+.main-form h4 {
+  opacity: 0.8;
 }
-.span-h4
-{
-    color: #6840bd;
+.span-h4 {
+  color: #6840bd;
 }
 
-.form-div
-{
-    /* font-size: 15px; */
-    margin-bottom: 10px;
+.form-div {
+  /* display: grid; */
+  width: 100%;
+  /* border: 1px solid gray;     */
+  outline: none;
+  padding: 6px;
+  border-radius: 5px;
 }
-.form-div label
-{
-    font-size: 12px;
-    font-weight: bold;
+
+.form-div label {
+  font-size: 12px;
+  font-weight: bold;
 }
-.checkbox-label label
-{
-    font-size: 13px;
+.form-check {
+  /* display: grid; */
+  width: 100%;
+  margin-right: 30px;
+  /* border: 1px solid gray;     */
+  outline: none;
+  padding: 6px;
+  border-radius: 5px;
 }
-.ui-button{
-     background-color: blue  ;
-     padding-right: 40px;
-     color: white;
+.form-check label {
+  font-size: 12px;
+  font-weight: bold;
+}
+/* .check-1 input 
+{
+    margin-left: 10px;
+} */
+.check-2 input {
+  margin-left: 100px;
+}
+.checkbox-label {
+  display: flex;
+  /* margin-bottom: 5px; */
+  /* margin: 10px; */
+  /* align-items: center; */
+}
+.checkbox-label label {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+.checkbox 
+{
+    margin-bottom: 8px;
+}
+.ui-button {
+  background-color: blue;
+  color: white;
+  font-size: 15px;
+  width: 100%;
+  margin-top: 13px;
+  padding: 3px 180px;
+  border-radius: 4px;
+  border: none;
+}
+.form-div input,
+textarea {
+  width: 100%;
+  border: 1px solid gray;
+  outline: none;
+  padding: 4px;
+  border-radius: 4px;
+}
+input:focus {
+  border: 1px solid blue;
 }

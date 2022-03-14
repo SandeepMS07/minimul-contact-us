@@ -1,11 +1,6 @@
 .contact-page
 {
     background-color: #6840bd;
-    margin-left: 60px;
-    margin-top: 47px;
-    margin-right: 500px;
-    width: 400px;
-    height: 578px;
     text-align: left;
     padding: 39px;
     /* border-radius: 10px; */
@@ -54,10 +49,11 @@ p{
 .phone
 {
     margin-left: 20px;
+    /* margin-bottom: 10px; */
 }
 .phone p{
     margin-top: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .ui-desc
@@ -78,14 +74,17 @@ p{
 {
     font-size: 12px;
 }
-
+.container-social
+{
+    margin-top: 60px;
+}
 .container-social a
 {
     color: white;
-    display: inline-flex;
-    margin: 18px;
-    height: 10px;
-    /* margin-left: 10px; */
-    padding-top: 130px;
-    font-size: 25px;
+    /* display: inline-flex; */
+    /* align-content: center; */
+    /* padding: 3px; */
+    margin-left: 20px;
+    margin-bottom: 5px;
+    font-size: 18px;
 }

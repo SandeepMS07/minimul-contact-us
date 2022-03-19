@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 // import PhoneInput from "react-phone-number-input";
 // import IntlTelInput from 'react-bootstrap-intl-tel-input'
@@ -6,19 +7,18 @@ import { useForm } from "react-hook-form";
 import "../Components/Form.css";
 
 export default function Form() {
-  // const [formValues, setformValues] = useState({
-  //   username: "",
-  //   email: "",
-  //   phonenumber: "",
-  //   query: "",
-  //   services: "",
-  // });
+  const [username, setusername] = useState();
+  const [email, setemail] = useState();
+  const [phonenumber, setphonenumber] = useState();
+  const [query, setquery] = useState();
+  const [services, setservices] = useState([]);
 
   let {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   //! Destructuring Form Values
   // let {username, email,phonenumber,query,services} = formValues;
   // console.log(handleSubmit)
@@ -27,15 +27,42 @@ export default function Form() {
   //! Submitting Form Data
   let sendData = (data) => {
     // console.log(formValues);
-    console.log(data);
+    // console.log(formvalues);
+    console.log(data.phonenumber);
+    let details = {
+      Name : data.username,
+      Email : data.email,
+      Phonenumber : data.phonenumber,
+      query : data.query,
+      services : data.services 
+    }
+    axios.post('https://sheetdb.io/api/v1/kix2fwrql2gls',details).then((response)=>
+    {
+      console.log(response)
+      setusername('')
+      setemail('')
+      setphonenumber('')
+      setquery('')
+      setservices('')
+    })
+    
   };
+
+  // let servicesLabes = [
+  //   "Website design",
+  //   "UX design",
+  //   "User research",
+  //   "Content creation",
+  //   "Strategy & consulting",
+  //   "Other",
+  // ];
 
   return (
     <div className="container">
-      <div className="ui row mt-5">
+      <div className="ui row mt-4">
         <div className="text-center">
           <h4 className="fw-bolder">Level up your brand</h4>
-          <p className="lead mt-2">
+          <p className="lead mt-1">
             You can reach us anytime via{" "}
             <span className="ui-span">hi&#64;untitledui.com</span>
           </p>
@@ -47,9 +74,12 @@ export default function Form() {
                 Name
               </label>
               <input
+                name="username"
                 type="username"
                 id="username"
                 placeholder="Your name"
+                onChange={(e) => setusername(e.target.value)}
+                value={username}
                 {...register("username", {
                   required: "*Name is required",
                   maxLength: { value: 80, message: "*Maximum 10 characters" },
@@ -63,10 +93,13 @@ export default function Form() {
                   Email
                 </label>
                 <input
+                  name="email"
                   type="email"
                   id="email"
                   placeholder="you@company.com"
                   className="form-control p-1"
+                  onChange={(e) => setemail(e.target.value)}
+                  value={email}
                   {...register("email", {
                     required: "*Email is Required",
                     pattern: {
@@ -82,10 +115,13 @@ export default function Form() {
                   Phone number
                 </label>
                 <input
+                  name="phonenumber"
                   type="tel"
                   id="phonenumber"
                   placeholder="+91 xxxxxxxxxx"
                   className="form-control p-1"
+                  onChange={(e) => setphonenumber(e.target.value)}
+                  value={phonenumber}
                   {...register("phonenumber", {
                     required: "*Phone number Required",
                     pattern: {
@@ -105,6 +141,8 @@ export default function Form() {
                   name="query"
                   id="query"
                   style={{ height: "120px" }}
+                  onChange={(e) => setquery(e.target.value)}
+                  value={query}
                   className="form-control p-1"
                   placeholder="Tell us a little about  the project"
                   {...register("query")}
@@ -118,15 +156,34 @@ export default function Form() {
                 </label>
                 <div className="row">
                   <div className="col-sm-6">
+                    {/* {servicesLabes.map((el, index) => {
+                      return (
+                        <div className="form-check" key={index}>
+                          <input
+                            name="services"
+                            id={index}
+                            type="checkbox"
+                            // onChange={setservices([...services, "Website design"])}
+                            value={el}
+                            className="form-check-input"
+                            {...register("services")}
+                          />
+                          <label htmlFor={index} className="form-label">
+                            {el}
+                          </label>
+                        </div>
+                      );
+                    })} */}
+
                     <div className="form-check">
                       <input
                         name="services"
                         id="flex-check-1"
                         type="checkbox"
+                        // onChange={setservices([...services, "Website design"])}
                         value={"Website design"}
                         className="form-check-input"
                         {...register("services")}
-
                       />
                       <label htmlFor="flex-check-1" className="form-label">
                         Website design
@@ -136,11 +193,11 @@ export default function Form() {
                       <input
                         name="services"
                         id="flex-check-2"
+                        // onChange={setservices([...services, "UX design"])}
                         type="checkbox"
                         className="form-check-input"
                         value={"UX design"}
                         {...register("services")}
-
                       />
                       <label htmlFor="flex-check-2" className="form-label">
                         UX design
@@ -150,11 +207,11 @@ export default function Form() {
                       <input
                         name="services"
                         id="flex-check-3"
+                        // onChange={setservices([...services, "User research"])}
                         type="checkbox"
                         className="form-check-input"
                         value={"User research"}
                         {...register("services")}
-
                       />
                       <label htmlFor="flex-check-3" className="form-label">
                         User research
@@ -165,12 +222,14 @@ export default function Form() {
                     <div className="form-check">
                       <input
                         name="services"
+                        // onChange={setservices([...services,
+                        //   "Content creation",
+                        // ])}
                         id="flex-check-4"
                         type="checkbox"
                         className="form-check-input"
                         value={"Content creation"}
                         {...register("services")}
-
                       />
                       <label htmlFor="flex-check-4" className="form-label">
                         Content creation
@@ -180,11 +239,13 @@ export default function Form() {
                       <input
                         name="services"
                         id="flex-check-5"
+                        // onChange={setservices([...services,
+                        //   "Strategy&consulting",
+                        // ])}
                         type="checkbox"
                         className="form-check-input"
                         value={"Strategy&consulting"}
                         {...register("services")}
-
                       />
                       <label htmlFor="flex-check-5" className="form-label">
                         Strategy&amp;consulting
@@ -194,6 +255,9 @@ export default function Form() {
                       <input
                         name="services"
                         id="flex-check-6"
+                        // onChange={setservices([...services,
+                        //   "Other",
+                        // ])}
                         type="checkbox"
                         className="form-check-input"
                         value={"Other"}

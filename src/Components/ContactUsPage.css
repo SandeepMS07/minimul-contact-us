@@ -1,34 +1,8 @@
 
-.container{
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    width: 100vw;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.main-page {
-  display: flex;
-  flex-direction: row;
-  height: 70vh;
-}
-
-.cont-page {
+.ui-sheet {
   background-color: #6840bd;
-  height: 70vh;
-  width: 30%;
+  color: #fff;
 }
-
-.form-page {
-  background-color:  white;
-  width: 70%; 
-  align-items: center;
+.ui-form {
+  background-color: #fff;
 }
-/* 
-.form-page
-{
-    margin-top: 100px;      
-} */

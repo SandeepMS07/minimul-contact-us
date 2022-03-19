@@ -1,90 +1,20 @@
-.contact-page
-{
-    background-color: #6840bd;
-    text-align: left;
-    padding: 39px;
-    /* border-radius: 10px; */
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+.lead {
+  font-size: 15px;
 }
-p{
-    opacity: 0.7;
+a {
+  text-decoration: none;
+  color: white;
+  /* font-weight: 500; */
 }
-
-.ui-chatUs
-{
-    margin-top: 25px;
-    display: flex;     
+p {
+  font-size: 11px;
 }
-.cont-us
-{
-    margin-left: 20px;
+.ui-footer {
+  margin-top: 190px;
+  margin-bottom: 33px;
+  /* height: 235px; */
 }
-.cont-us p{
-    font-size: 14px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-}
-
-.ui-loc
-{
-    margin-top: 25px;
-    display: flex;
-}
-.loc
-{
-    margin-left: 20px;
-}
-.loc p{
-    font-size: 14px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-}
-
-.ui-phn
-{
-    display: flex;
-    margin-top: 25px;
-}
-.phone
-{
-    margin-left: 20px;
-    /* margin-bottom: 10px; */
-}
-.phone p{
-    margin-top: 5px;
-    margin-bottom: 25px;
-}
-
-.ui-desc
-{
-    color: white;
-    background-color: #6840bd;
-    
-}
-
-.cont-us a
-{
-    text-decoration: none;
-    color: white;
-    font-size: 14px;
-}
-
-.phone p
-{
-    font-size: 12px;
-}
-.container-social
-{
-    margin-top: 60px;
-}
-.container-social a
-{
-    color: white;
-    /* display: inline-flex; */
-    /* align-content: center; */
-    /* padding: 3px; */
-    margin-left: 20px;
-    margin-bottom: 5px;
-    font-size: 18px;
+.fa-brands:hover {
+  font-size: 25px;
+  color: yellowgreen;
 }

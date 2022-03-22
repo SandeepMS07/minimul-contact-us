@@ -1,3 +1,4 @@
+import { toBeChecked } from "@testing-library/jest-dom/dist/matchers";
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -5,13 +6,18 @@ import { useForm } from "react-hook-form";
 // import IntlTelInput from 'react-bootstrap-intl-tel-input'
 // import PhoneInput from 'react-phone-input-2'
 import "../Components/Form.css";
+import HomePage from "../pages/HomePage";
+import formData from "./details";
+import Inputs from "./Inputs";
 
 export default function Form() {
-  const [username, setusername] = useState();
-  const [email, setemail] = useState();
-  const [phonenumber, setphonenumber] = useState();
-  const [query, setquery] = useState();
-  const [services, setservices] = useState([]);
+  const [formvalues, setformvalues] = useState({
+    username: "",
+    email: "",
+    phonenumber: "",
+    services: [],
+    query: "",
+  });
 
   let {
     register,
@@ -28,37 +34,41 @@ export default function Form() {
   let sendData = (data) => {
     // console.log(formValues);
     // console.log(formvalues);
-    console.log(data.phonenumber);
+    // console.log(data.phonenumber);
     let details = {
-      Name : data.username,
-      Email : data.email,
-      Phonenumber : data.phonenumber,
-      query : data.query,
-      services : data.services 
-    }
-    axios.post('https://sheetdb.io/api/v1/kix2fwrql2gls',details).then((response)=>
-    {
-      console.log(response)
-      setusername('')
-      setemail('')
-      setphonenumber('')
-      setquery('')
-      setservices('')
-    })
-    
+      Name: data.username,
+      Email: data.email,
+      Phonenumber: data.phonenumber,
+      query: data.query,
+      services: data.services,
+    };
+    axios
+      .post("https://sheetdb.io/api/v1/kix2fwrql2gls", details)
+      .then((response) => {
+        console.log(response);
+        setformvalues({});
+      });
   };
 
-  // let servicesLabes = [
-  //   "Website design",
-  //   "UX design",
-  //   "User research",
-  //   "Content creation",
-  //   "Strategy & consulting",
-  //   "Other",
-  // ];
+  let servicesLabes = [
+    "Website design",
+    "UX design",
+    "User research",
+    "Content creation",
+    "Strategy & consulting",
+    "Other",
+  ];
+
+  let updateData = (e) => {
+    let { name, value } = e.target;
+    setformvalues({...formvalues,[name]:value})
+     
+
+
 
   return (
     <div className="container">
+    <h1>{JSON.stringify(formvalues)}</h1>
       <div className="ui row mt-4">
         <div className="text-center">
           <h4 className="fw-bolder">Level up your brand</h4>
@@ -70,68 +80,25 @@ export default function Form() {
         <div className="row justify-content-center my-1">
           <div className="col-lg-6">
             <form action="" onSubmit={handleSubmit(sendData)}>
-              <label htmlFor="username" className="form-label">
-                Name
-              </label>
-              <input
-                name="username"
-                type="username"
-                id="username"
-                placeholder="Your name"
-                onChange={(e) => setusername(e.target.value)}
-                value={username}
-                {...register("username", {
-                  required: "*Name is required",
-                  maxLength: { value: 80, message: "*Maximum 10 characters" },
-                })}
-                className="form-control p-1"
-              />
-              <p>{errors.username?.message}</p>
-
-              <div className="my-1">
-                <label htmlFor="email" className="form-label">
-                  Email
-                </label>
-                <input
-                  name="email"
-                  type="email"
-                  id="email"
-                  placeholder="you@company.com"
-                  className="form-control p-1"
-                  onChange={(e) => setemail(e.target.value)}
-                  value={email}
-                  {...register("email", {
-                    required: "*Email is Required",
-                    pattern: {
-                      value: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-                      message: "*Enter valid email address",
-                    },
-                  })}
-                />
-                <p>{errors.email?.message}</p>
-              </div>
-              <div className="my-1">
-                <label htmlFor="phonenumber" className="form-label">
-                  Phone number
-                </label>
-                <input
-                  name="phonenumber"
-                  type="tel"
-                  id="phonenumber"
-                  placeholder="+91 xxxxxxxxxx"
-                  className="form-control p-1"
-                  onChange={(e) => setphonenumber(e.target.value)}
-                  value={phonenumber}
-                  {...register("phonenumber", {
-                    required: "*Phone number Required",
-                    pattern: {
-                      value: /^[6-9][0-9]{9}$/g,
-                      message: "*Enter valid mobile number",
-                    },
-                  })}
-                />
-                <p>{errors.phonenumber?.message}</p>
-              </div>
+              {formData.map((inp, ind) => {
+                return (
+                  <div key={ind} className="my-1">
+                    <label htmlFor={inp.name} className="form-label">
+                      {inp.inputname}
+                    </label>
+                    <Inputs
+                      name={inp.name}
+                      type={inp.type}
+                      id={inp.id}
+                      placeholder={inp.placeholder}
+                      message={inp.msg}
+                      value={inp.inpval}
+                      onchange={updateData}
+                    />
+                    <p>{errors[inp.name]?.message}</p>
+                  </div>
+                );
+              })}
 
               <div className="my-1">
                 <label htmlFor="query" className="form-label">
@@ -141,8 +108,8 @@ export default function Form() {
                   name="query"
                   id="query"
                   style={{ height: "120px" }}
-                  onChange={(e) => setquery(e.target.value)}
-                  value={query}
+                  onChange={updateData}
+                  // value={formvalues.query}
                   className="form-control p-1"
                   placeholder="Tell us a little about  the project"
                   {...register("query")}
@@ -155,15 +122,15 @@ export default function Form() {
                   Services
                 </label>
                 <div className="row">
-                  <div className="col-sm-6">
-                    {/* {servicesLabes.map((el, index) => {
-                      return (
-                        <div className="form-check" key={index}>
+                  {servicesLabes.map((el, index) => {
+                    return (
+                      <div className="col-sm-6" key={index}>
+                        <div className="form-check">
                           <input
                             name="services"
                             id={index}
                             type="checkbox"
-                            // onChange={setservices([...services, "Website design"])}
+                            onChange={updateData}
                             value={el}
                             className="form-check-input"
                             {...register("services")}
@@ -172,102 +139,9 @@ export default function Form() {
                             {el}
                           </label>
                         </div>
-                      );
-                    })} */}
-
-                    <div className="form-check">
-                      <input
-                        name="services"
-                        id="flex-check-1"
-                        type="checkbox"
-                        // onChange={setservices([...services, "Website design"])}
-                        value={"Website design"}
-                        className="form-check-input"
-                        {...register("services")}
-                      />
-                      <label htmlFor="flex-check-1" className="form-label">
-                        Website design
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input
-                        name="services"
-                        id="flex-check-2"
-                        // onChange={setservices([...services, "UX design"])}
-                        type="checkbox"
-                        className="form-check-input"
-                        value={"UX design"}
-                        {...register("services")}
-                      />
-                      <label htmlFor="flex-check-2" className="form-label">
-                        UX design
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input
-                        name="services"
-                        id="flex-check-3"
-                        // onChange={setservices([...services, "User research"])}
-                        type="checkbox"
-                        className="form-check-input"
-                        value={"User research"}
-                        {...register("services")}
-                      />
-                      <label htmlFor="flex-check-3" className="form-label">
-                        User research
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="form-check">
-                      <input
-                        name="services"
-                        // onChange={setservices([...services,
-                        //   "Content creation",
-                        // ])}
-                        id="flex-check-4"
-                        type="checkbox"
-                        className="form-check-input"
-                        value={"Content creation"}
-                        {...register("services")}
-                      />
-                      <label htmlFor="flex-check-4" className="form-label">
-                        Content creation
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input
-                        name="services"
-                        id="flex-check-5"
-                        // onChange={setservices([...services,
-                        //   "Strategy&consulting",
-                        // ])}
-                        type="checkbox"
-                        className="form-check-input"
-                        value={"Strategy&consulting"}
-                        {...register("services")}
-                      />
-                      <label htmlFor="flex-check-5" className="form-label">
-                        Strategy&amp;consulting
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input
-                        name="services"
-                        id="flex-check-6"
-                        // onChange={setservices([...services,
-                        //   "Other",
-                        // ])}
-                        type="checkbox"
-                        className="form-check-input"
-                        value={"Other"}
-                        {...register("services")}
-                      />
-                      <label htmlFor="flex-check-6" className="form-label">
-                        Other
-                      </label>
-                    </div>
-                  </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 

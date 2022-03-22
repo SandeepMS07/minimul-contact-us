@@ -1,7 +1,5 @@
-import React from 'react'
-import  ContactUs  from "./pages/ContactUs";
-import "./App.css"
-// import Form from './Components/Form'
+import React from 'react' 
+import ContactUs from './pages/ContactUs';
 
 export default function App() {
   return (
